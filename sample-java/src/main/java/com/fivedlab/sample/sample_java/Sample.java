@@ -121,21 +121,26 @@ public class Sample {
 			JSONObject topData = new JSONObject();
 			JSONObject data = new JSONObject();
 			data.put("sdk", sdk);
-			data.put("sdk_version", getSdkVersion());
-			data.put("app_token", appToken);
-			data.put("server_side", serverSide);
+			data.put("sdk_event", getSdkVersion());
+			data.put("app_token", getAppToken());
+			// The test failes if a boolean is used here
+			// I guess the problem is on the backend
+			data.put("server_side", isServerSide() ? "1" : "0");
 			data.put("event_name", eventName);
 			data.put("event_category", eventCategory);
-			data.put("timestamp", dateFormat.format(new Date()));
+			data.put("timestamp",Math.round(new Date().getTime() / 1000));
 			if (args != null) {
 				Iterator iter = args.keySet().iterator();
 				while (iter.hasNext()) {
 					String key = (String) iter.next();
 					Object content = args.get(key);
 					if (content instanceof Date ) {
-						content = dateFormat.format((Date)content);
+						Date userDate = (Date)content;
+                        data.put("timestamp", Math.round(userDate.getTime() / 1000));
 					}
-					data.put(key, content);
+					else {
+						data.put(key, content);
+					}
 				}
 			}
 

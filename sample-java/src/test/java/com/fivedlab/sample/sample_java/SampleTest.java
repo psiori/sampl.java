@@ -36,7 +36,7 @@ public class SampleTest {
 		 * update this if you increase version numbers. should at least match
 		 * the last released version so it's sure no stepping back my occur
 		 **/
-		int[] version = {0,0,3};
+		int[] version = {0,0,5};
 		
 		StringTokenizer tokenizer = new StringTokenizer(Sample.getSdkVersion(), ".");
 		int tokens = tokenizer.countTokens();
@@ -79,7 +79,7 @@ public class SampleTest {
 	public void testTrackSucceeds() {
 		Map map = new HashMap();
 		map.put("app_token","sample.java-test-token");
-		map.put("debug", new Boolean(true));
+		map.put("debug", true);
 		String response = Sample.track("ping", "session", map);
 		assertNotNull("repsonse should not be null", response);
 		assertTrue("201".equals(response));
